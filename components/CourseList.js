@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Course from './Course';
 import TermSelector from './TermSelector';
+import CourseSelector from './CourseSelector';
 
 const termMap = { F: 'Fall', W: 'Winter', S: 'Spring'};
 const terms = Object.values(termMap);
@@ -17,10 +17,8 @@ const CourseList = ({courses}) => {
     
     return (
       <ScrollView>
-        <TermSelector selectedTerm={selectedTerm} 
-                      setSelectedTerm = {setSelectedTerm}
-        />
-        { termCourses.map(course => <Course key={course.id} course={course} />) }
+        <TermSelector selectedTerm={selectedTerm} setSelectedTerm = {setSelectedTerm}/>
+        <CourseSelector courses = { termCourses } />
       </ScrollView>
     );
 };
