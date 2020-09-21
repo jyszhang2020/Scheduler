@@ -1,57 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState} from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-  
-const schedule = {
-  "title": "CS Fall Courses for 2020-2021",
-  "courses": [
-    {
-      "id": "F330",
-      "title": "Computer Science: Concepts, Philosophy, and Connections",
-      "meets": "MWF 11:00-11:50"
-    },
-    {
-      "id": "F351",
-      "title": "Intro Programming for non-majors",
-      "meets": "MWF 10:00-10:50"
-    },
-    {
-      "id": "F497",
-      "title": "Fundamentals of Computer Programming I",
-      "meets": "MWF 13:00-13:50"
-    },
-    {
-      "id": "F423",
-      "title": "Fundamentals of Computer Programming II",
-      "meets": "TuTh 12:30-13:50"
-    }
-  ]
-};
-
-const getCourseNumber = course => (
-  course.id.slice(1)
-);
-
-const Course = ({ course }) => (
-  <TouchableOpacity style={styles.courseButton}>
-    <Text style={styles.courseText}>
-      {`CS ${getCourseNumber(course)}\n${course.meets}`}
-    </Text>
-  </TouchableOpacity>
-);
-
-const CourseList = ({ courses }) => (
-  <ScrollView>
-    <View style={styles.courseList}>
-      { courses.map(course => <Course key={course.id} course={ course } />) }
-    </View>
-  </ScrollView>
-);
-
-const Banner = ({ title }) => (
-  <Text style={styles.banner}>{ title }</Text>
-);
+import CourseList from './components/CourseList';
+import Course from './components/Course';
+import Banner from './components/Banner';
 
 const App = () => {
+  const [schedule, setSchedule] = useState ({ title: '', courses: [] });
+
+  const url = 'https://courses.cs.northwestern.edu/394/data/cs-courses.php';
+
+  useEffect( () => {
+    const fetchSchedule = async () => {
+      const response = await fetch(url);
+      if (!response.ok) throw response;
+      const json = await response.json();
+      setSchedule(json);
+    }
+    fetchSchedule();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <Banner title={schedule.title} />
@@ -66,33 +33,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 20,
-  },
-  banner: {
-    color: '#888',
-    fontSize: 32,
-  },
-  courseList: {
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  courseButton: {
-    borderRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 10,
-    height: 60,
-    padding: 10,
-    minWidth: 90,
-    maxWidth: 90,
-    backgroundColor: '#66b0ff',
-  },
-  courseText:{
-    color: '#fff',
-    fontSize: 12,
-    textAlign: 'center',
   },
 });
 

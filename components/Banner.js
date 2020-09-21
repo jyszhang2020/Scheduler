@@ -3,7 +3,7 @@ import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } fr
 
 
 const Banner = ({ title }) => (
-    <Text style={styles.banner}>{ title }</Text>
+    <Text style={styles.banner}>{ title || '[loading...]' }</Text>
   );
 
 const styles = StyleSheet.create({
