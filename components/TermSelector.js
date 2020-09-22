@@ -12,18 +12,20 @@ const TermButton = ({term, setSelectedTerm, isActive}) => (
 );
 
 // get the setSelectTerm function from parents CouseList.js
-const TermSelector = ({ selectedTerm, setSelectedTerm }) => (
-    <View style={styles.termSelector}>
-        { 
-        terms.map(term => (
-            // pass the setSelectedTerm to its child component TermButton
-            <TermButton key={term} term={term}
-            setSelectedTerm = {setSelectedTerm}
-            isActive = {term === selectedTerm} />
-        ))
-        }
-    </View>
-);
+const TermSelector = ({ selectedTerm, setSelectedTerm }) => {
+    return (
+        <View style={styles.termSelector}>
+            { 
+                terms.map(term => (
+                    // pass the setSelectedTerm to its child component TermButton
+                    <TermButton key={term} term={term}
+                    setSelectedTerm = {setSelectedTerm}
+                    isActive = {term === selectedTerm} />
+                ))
+            }
+        </View>
+    )
+};
 
 const termButtonBase = {
     flex: 1,
